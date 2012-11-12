@@ -66,7 +66,7 @@ public class NewSPDXFileWizardPage extends WizardPage {
 	 * @param pageName
 	 */
 	public NewSPDXFileWizardPage(ISelection selection) {
-		super("wizardPage");
+		super("wizardPage");	// 
 		setTitle("Software Package Data eXchange file");
 		setDescription("This wizard creates a new file with *.spdx extension.");
 		this.selection = selection;
