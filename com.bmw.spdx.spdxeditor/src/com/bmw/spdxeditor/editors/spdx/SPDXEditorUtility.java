@@ -22,7 +22,13 @@ import java.io.OutputStream;
 import java.io.StringBufferInputStream;
 import java.security.MessageDigest;
 import java.util.Properties;
+
+import org.apache.commons.lang3.StringUtils;
 import org.spdx.rdfparser.SPDXDocument;
+import org.spdx.rdfparser.SPDXLicenseInfo;
+import org.spdx.rdfparser.SPDXLicenseSet;
+import org.spdx.rdfparser.SPDXStandardLicense;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFReader;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
@@ -78,7 +84,32 @@ public class SPDXEditorUtility {
 		ossSourceIndex.load(new FileInputStream(indexFile));
 
 	}
-	
+	/**
+	 * Determine whether licInfo represents a license considered as GPL-Like/Copyleft.
+	 * Currently these are MPL, GPL, LGPL
+	 * @param licInfo
+	 * @return
+	 */
+	public static boolean isCopyleftLicense(SPDXLicenseInfo licInfo) {
+		if(licInfo== null) return false;
+		
+		if(licInfo instanceof SPDXStandardLicense) {
+			SPDXStandardLicense stdLic = (SPDXStandardLicense) licInfo;
+			if(StringUtils.containsIgnoreCase(stdLic.getId(), "GPL") || StringUtils.containsIgnoreCase(stdLic.getId(), "MPL")) {
+				return true;
+			}
+		} else if(licInfo instanceof SPDXLicenseSet) {
+			SPDXLicenseSet licSet = (SPDXLicenseSet) licInfo;
+			SPDXLicenseInfo[] licenses = licSet.getSPDXLicenseInfos();
+			boolean result = false;
+			for(SPDXLicenseInfo license : licenses) {
+				result = isCopyleftLicense(license);
+				if(result) return true;
+			}
+		}
+		return false;
+	}
+
 	public static SPDXEditorUtility getInstance() throws Exception {
 		if(_instance == null) {
 			_instance = new SPDXEditorUtility();
