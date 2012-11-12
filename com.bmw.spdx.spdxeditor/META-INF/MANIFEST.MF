@@ -45,8 +45,6 @@ Bundle-Vendor: Bayerische Motoren Werke Aktiengesellschaft
 Export-Package: com.bmw.spdxeditor,
  com.bmw.spdxeditor.editors.spdx,
  com.bmw.spdxeditor.handler,
- com.bmw.spdxeditor.listener,
- com.bmw.spdxeditor.util,
  com.bmw.spdxeditor.wizards,
  org.spdx.rdfparser,
  org.spdx.spdxspreadsheet,
