@@ -40,7 +40,7 @@ public class SPDXEditorUtility {
 
 	private static SPDXEditorUtility _instance;
 	private static String OSS_SOURCE_CODE_DIR = "X:\\10_ALL_SOURCE_CODE"; 
-	public static  final String[] STANDARD_LICENSE_IDS = new String[] {
+	public static  final String[] STANDARD_LICENSE_IDS = new String[] {		// All SPDX unique license identifiers
 		"AAL", "AFL-1.1", "AFL-1.2", "AFL-2.0", "AFL-2.1", "AFL-3.0", "AGPL-3.0",
 		"ANTLR-PD", "APL-1.0", "APSL-1.0", "APSL-1.1", "APSL-1.2", "APSL-2.0",
 		"Apache-1.0", "Apache-1.1", "Apache-2.0", "Artistic-1.0", "Artistic-2.0",
@@ -86,6 +86,11 @@ public class SPDXEditorUtility {
 		return _instance;
 	}
 	
+	/**
+	 * Output SPDXDocument RDF model as string.
+	 * @param document
+	 * @return
+	 */
 	public static String saveModelToString(SPDXDocument document) {
 		// Save document
 		Model spdxFileModel = document.getModel();
@@ -101,6 +106,13 @@ public class SPDXEditorUtility {
 		return fileOut.toString();
 	}
 	
+	
+	/**
+	 * output SPDXDocument RDF model as file
+	 * @param document
+	 * @param file
+	 * @throws FileNotFoundException
+	 */
 	public static void saveModelToFile(SPDXDocument document, File file) throws FileNotFoundException {
 		// Save document
 		Model spdxFileModel = document.getModel();
@@ -115,6 +127,11 @@ public class SPDXEditorUtility {
 		w.write(spdxFileModel, fileOut, "");
 	}
 	
+	/**
+	 * Get SPDXDocument as InputStream
+	 * @param document
+	 * @return
+	 */
 	public static InputStream getModelInputStream(SPDXDocument document) {
 		// Save document
 		Model spdxFileModel = document.getModel();
@@ -127,6 +144,11 @@ public class SPDXEditorUtility {
 		return spdxDocumentInputStream;
 	}
 	
+	/**
+	 * Locate file for given hash in the index directory.
+	 * @param hash
+	 * @return
+	 */
 	public File getFileForSHA1Hash(String hash) {
 		String fileName = ossSourceIndex.getProperty(hash);
 		fileName = OSS_SOURCE_CODE_DIR + "\\" + fileName;
