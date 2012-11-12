@@ -52,10 +52,12 @@ public class RemoveLinkedSourceCodeFile implements IHandler {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Remove selected source code file linked from SPDX model
+	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IEditorInput input = HandlerUtil.getActiveEditorInput(event);
@@ -65,43 +67,43 @@ public class RemoveLinkedSourceCodeFile implements IHandler {
 		if(!(input instanceof SPDXEditorInput)) {
 			return null;
 		}			
-		
+
 		// Get selected source code file
 		try {
 			spdxInput = (SPDXEditorInput) input;
-			
+
 			SPDXPackage spdxPackage = spdxInput.getAssociatedSPDXFile().getSpdxPackage();
 			IStructuredSelection currentSelection = (IStructuredSelection) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getSelection();
 			List<SPDXFile> selectionList = currentSelection.toList();
-			
+
 			List<SPDXFile> assignedSourceCodeFiles = new ArrayList<SPDXFile>(Arrays.asList(spdxPackage.getFiles()));
-			
+
 			/*
 			 * Delete file from list of assigned files (SPDXFile does not overwrite equals()):
 			 * Compare name + checksum
 			 * 
 			 */
 			Model model = spdxInput.getAssociatedSPDXFile().getModel();
-			
+
 			for(SPDXFile file : selectionList) {
 				logger.info("Remove file {}, hash={}",  file.getName(), file.getSha1());
-						
+
 				// Remove link from package -> SPDX File
 				SPDXFile fileToBeUnlinked = getSPDXFileByNameAndChecksumInList(assignedSourceCodeFiles, file.getName(), file.getSha1());				
 				assignedSourceCodeFiles.remove(fileToBeUnlinked);
-				
+
 				Resource resourceToBeUnlinked = fileToBeUnlinked.createResource(model);
 
 				String SPDX_NAMESPACE = "http://spdx.org/rdf/terms#";
 				String PROP_SPDX_FILE = "referencesFile";
 				Node p = model.getProperty(SPDX_NAMESPACE, PROP_SPDX_FILE).asNode();
-								
+
 			}
 			logger.info("# Remaining files after deletion {}", assignedSourceCodeFiles.size());
-			
+
 			spdxPackage.setFiles((SPDXFile[]) assignedSourceCodeFiles.toArray(new SPDXFile[]{}));
 			String SPDX_NAMESPACE = "http://spdx.org/rdf/terms#";
-			
+
 			spdxInput.dataModelChanged();
 		} catch (Exception e1) {
 			MessageDialog.openError(shell, "Error when removing linked file",e1.getMessage());
@@ -109,8 +111,8 @@ public class RemoveLinkedSourceCodeFile implements IHandler {
 
 		return null;
 	}
-	
-		private SPDXFile getSPDXFileByNameAndChecksumInList(List<SPDXFile> listToSearchIn, String name, String checksumValue) {
+
+	private SPDXFile getSPDXFileByNameAndChecksumInList(List<SPDXFile> listToSearchIn, String name, String checksumValue) {
 		for(SPDXFile singleFile : listToSearchIn) {
 			if(singleFile.getName().equals(name) && singleFile.getSha1().equals(checksumValue)) return singleFile; 
 		}
