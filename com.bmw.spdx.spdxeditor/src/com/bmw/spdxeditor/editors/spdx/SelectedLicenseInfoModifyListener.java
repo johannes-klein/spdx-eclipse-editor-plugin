@@ -32,7 +32,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 
 
 /**
- * Listener is called from UI when the license selected is changed.
+ * Listener is called from UI when the license selected is changed and applies changed UI selection for given licenseType (concluded/declared)
+ * to model.
  * @author Johannes Klein (johannes.klein@bmw.de)
  *
  */
@@ -60,7 +61,10 @@ public class SelectedLicenseInfoModifyListener implements  ModifyListener {
 		Map<String, SPDXLicenseInfo> allLicensingInfoInSPDXFile = (Map<String, SPDXLicenseInfo>) source.getData();
 
 		try {
+			// The chosen license ID (string)
 			licenseChoiceID = source.getText();
+			
+			// The chosen license (SPDX license)
 			selectedLicense = allLicensingInfoInSPDXFile.get(licenseChoiceID);
 			// Lazy creation of license resources for standard license IDs
 			if(selectedLicense == null) {
@@ -88,36 +92,32 @@ public class SelectedLicenseInfoModifyListener implements  ModifyListener {
 			setterMethod.invoke(licenseContainer, licenseInfo);
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
+	/**
+	 * Get license set for licenseType in model.
+	 * @return
+	 */
 	private SPDXLicenseInfo getLicenseInfo() {
 		SPDXLicenseInfo result = null;
 		try {
 			logger.debug("Getting license info to {}", this.licenseType);
 			 result = (SPDXLicenseInfo) licenseContainer.getClass().getMethod("get" + this.licenseType, null).invoke(licenseContainer, null);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
