@@ -32,6 +32,7 @@ import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -90,8 +91,6 @@ import org.spdx.rdfparser.SPDXNonStandardLicense;
 import org.spdx.rdfparser.SPDXNoneLicense;
 import org.spdx.rdfparser.SPDXStandardLicense;
 import org.spdx.rdfparser.SpdxNoAssertionLicense;
-
-import com.bmw.spdxeditor.listener.SPDXModelChangedListener;
 
 
 /**
@@ -326,7 +325,7 @@ public class SPDXEditor extends EditorPart {
 		});
 
 		// Listen for changes on model
-		this.getInput().addChangeListener(new SPDXModelChangedListener() {
+		this.getInput().addChangeListener(new IResourceChangeListener() {
 			@Override
 			public void resourceChanged(IResourceChangeEvent event) {
 				try {
@@ -336,8 +335,6 @@ public class SPDXEditor extends EditorPart {
 					tableViewer.refresh();
 					loadLicenseDataFromSPDXFile();
 					
-//					populateLicenseSelectorWithAvailableLicenses(concludedLicenseChoice);
-//					logger.info("CONCLUDED LICENSE IS NOW {}", getInput().getAssociatedSPDXFile().getSpdxPackage().getConcludedLicenses());					
 					setLicenseComboBoxValue(concludedLicenseChoice, getInput().getAssociatedSPDXFile().getSpdxPackage().getConcludedLicenses());					
 
 //					populateLicenseSelectorWithAvailableLicenses(declaredLicenseChoice);
@@ -794,7 +791,7 @@ public class SPDXEditor extends EditorPart {
 		tableViewer.setInput(referencedFiles);
 		getSite().setSelectionProvider(tableViewer);
 
-		this.getInput().addChangeListener(new SPDXModelChangedListener() {
+		this.getInput().addChangeListener(new IResourceChangeListener() {
 			@Override
 			public void resourceChanged(IResourceChangeEvent event) {
 				SPDXFile[] referencedFiles;

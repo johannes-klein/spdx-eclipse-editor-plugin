@@ -15,12 +15,12 @@ package com.bmw.spdxeditor.editors.spdx;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.spdx.rdfparser.SPDXDocument;
-
-import com.bmw.spdxeditor.listener.SPDXModelChangedListener;
 
 
 /**
@@ -30,7 +30,7 @@ import com.bmw.spdxeditor.listener.SPDXModelChangedListener;
  */
 public class SPDXEditorInput implements IEditorInput {
 	public final String ID;
-	private List<SPDXModelChangedListener> spdxModelChangedListeners = new ArrayList<SPDXModelChangedListener>();
+	private List<IResourceChangeListener> spdxModelChangedListeners = new ArrayList<IResourceChangeListener>();
 	private SPDXDocument associatedSPDXDocument;
 	private File associatedFile;
 	public SPDXEditorInput(String id, SPDXDocument spdxFileObject, File filePathObject) {
@@ -106,17 +106,17 @@ public class SPDXEditorInput implements IEditorInput {
 	}
 
 	public void dataModelChanged() {
-		for(SPDXModelChangedListener listener : this.spdxModelChangedListeners) {
+		for(IResourceChangeListener listener : this.spdxModelChangedListeners) {
 			listener.resourceChanged(null);
 		}
 		
 	}
 	
-	public void addChangeListener(SPDXModelChangedListener listener) {
+	public void addChangeListener(IResourceChangeListener listener) {
 		this.spdxModelChangedListeners.add(listener);
 	}
 	
-	public void removeChangeListener(SPDXModelChangedListener listener) {
+	public void removeChangeListener(IResourceChangeListener listener) {
 		this.spdxModelChangedListeners.remove(listener);
 	}
 	
