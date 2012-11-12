@@ -24,7 +24,7 @@ import com.bmw.spdxeditor.listener.SPDXModelChangedListener;
 
 
 /**
- * 
+ * Input data for SPDXEditor component, wraps the SPDXDocument model
  * @author Johannes Klein (johannes.klein@bmw.de)
  *
  */
@@ -57,7 +57,6 @@ public class SPDXEditorInput implements IEditorInput {
 	
 	@Override
 	public Object getAdapter(Class adapter) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -68,7 +67,6 @@ public class SPDXEditorInput implements IEditorInput {
 
 	@Override
 	public ImageDescriptor getImageDescriptor() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -83,7 +81,6 @@ public class SPDXEditorInput implements IEditorInput {
 
 	@Override
 	public IPersistableElement getPersistable() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
