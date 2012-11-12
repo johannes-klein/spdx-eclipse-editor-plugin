@@ -26,20 +26,26 @@ import org.spdx.rdfparser.SPDXDocument;
 
 import com.bmw.spdxeditor.editors.spdx.SPDXEditorInput;
 
+/**
+ * Add a new custom license text to SPDX file.
+ * @author Johannes Klein (johannes.klein@bmw.de)
+ *
+ */
 public class AddNewLicenseText implements IHandler {
 
 	@Override
 	public void addHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Add license text as "extracted license text" to SPDX document
+	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Shell shell = Display.getDefault().getActiveShell();
@@ -55,7 +61,6 @@ public class AddNewLicenseText implements IHandler {
 				spdxDocument.addNewExtractedLicenseInfo("New extracted license text");
 				spdxInput.dataModelChanged();
 			} catch (InvalidSPDXAnalysisException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -64,20 +69,16 @@ public class AddNewLicenseText implements IHandler {
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isHandled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public void removeHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
