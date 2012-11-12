@@ -48,7 +48,6 @@ public class AddLinkedSourceCodeFile implements IHandler {
 
 	@Override
 	public void addHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -114,8 +113,6 @@ public class AddLinkedSourceCodeFile implements IHandler {
 
 	@Override
 	public void removeHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
