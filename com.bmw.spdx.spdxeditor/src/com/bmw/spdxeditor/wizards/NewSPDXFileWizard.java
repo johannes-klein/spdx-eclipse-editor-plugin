@@ -141,7 +141,7 @@ public class NewSPDXFileWizard extends Wizard implements INewWizard {
 		}
 
 		// Start monitor thread
-		monitor.worked(1);
+		monitor.worked(1);	//  a non-negative number of work units just completed
 		monitor.setTaskName("Opening file for editing...");
 		getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
@@ -153,7 +153,7 @@ public class NewSPDXFileWizard extends Wizard implements INewWizard {
 				}
 			}
 		});
-		monitor.worked(1);
+		monitor.worked(1); //  a non-negative number of work units just completed
 	}
 
 	private InputStream openContentStream(URL spdxUrl) throws CoreException {
@@ -167,9 +167,7 @@ public class NewSPDXFileWizard extends Wizard implements INewWizard {
 			this.throwCoreException("Please configure SPDX_DEFAULT_FILE_CREATOR first");
 		}
 
-
-		// TODO: Should be in file
-		// Basic SPDX file 
+		// Initialize a basic SPDX file from String 
 		String contents = "<?xml version=\"1.0\"?>\n<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" "+ 
 				"xmlns=\"http://spdx.org/rdf/terms#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"><SpdxDocument rdf:about=\""+ spdxUrl.toString() +"#SPDXANALYSIS\">" +
 				"<dataLicense rdf:resource=\"http://spdx.org/licenses/PDDL-1.0\" />"+
