@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.bmw.spdxeditor.editors.spdx.SPDXEditor"
+            extensions="spdx"
+            icon="icons/sample.gif"
+            id="com.bmw.spdxeditor.editors.spdx.SPDXEditor"
+            name="SPDX Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="SPDXEditor"
+            name="SPDX">
+      </category>
+      <wizard
+            category="SPDXEditor"
+            class="com.bmw.spdxeditor.wizards.NewSPDXFileWizard"
+            icon="icons/sample.gif"
+            id="com.bmw.spdxeditor.wizards.New SPDXFileWizard"
+            name="SPDX Description File">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="com.bmw.spdxeditor.handler.AddLinkedSourceCodeFile"
+            id="SPDXEditor.addLinkedSourceCodeFile"
+            name="AddLinkedSourceCodeFile">
+      </command>
+      <command
+            defaultHandler="com.bmw.spdxeditor.handler.GUIDropdownHelper"
+            id="guiDropdownHelper"
+            name="guiDropdownHelper">
+      </command>
+      <command
+            defaultHandler="com.bmw.spdxeditor.handler.RemoveLinkedSourceCodeFile"
+            id="SPDXEditor.removedLinkedSourceCodeFile"
+            name="RemoveLinkedSourceCodeFile">
+      </command>
+      <command
+            defaultHandler="com.bmw.spdxeditor.handler.AddNewLicenseText"
+            id="SPDXEditor.addNewLicenseText"
+            name="AddNewLicenseText">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.bmw.spdxeditor.SPDXPreferencesPage"
+            id="SPDXEditor.spdxPreferencePage"
+            name="SPDX Creator">
+      </page>
+   </extension>
+
+</plugin>
